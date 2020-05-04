@@ -1,0 +1,3 @@
+2020-05-04 18:08:07	ERROR	test macro error
+2020-05-04 18:08:07	ERROR	test macro fmt error: aa
+2020-05-04 18:08:07	ERROR	test macro fmt error: 23
