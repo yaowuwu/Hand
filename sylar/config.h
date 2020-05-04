@@ -33,7 +33,7 @@ protected:
     std::string m_description;
 };
 
-template<class T, >
+template<class T >
 class ConfigVar : public ConfigVarBase{
 public:
     typedef std::shared_ptr<ConfigVar> ptr;
