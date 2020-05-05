@@ -27,6 +27,20 @@ Appender(日志输出地方)
 
 配置系统的原则: 约定优于配置
 
+```cpp
+template<T, FromStr, ToStr>
+class ConfigVar;
+
+template<F, T>
+LexicalCast;
+
+//容器 片特化, 目前支持vector 
+```
+
+更新虚拟机时间
+sudo yum install -y man-pages.noarch
+sudo ntpdate -u asia.pool.ntp.org
+
 sp sylar/util.h  vim快捷键
 :A ? 
 

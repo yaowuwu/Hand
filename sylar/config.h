@@ -33,7 +33,49 @@ protected:
     std::string m_description;
 };
 
-template<class T >
+//F from_type, T to_type
+template<class F, class T>
+class LexicalCast{
+public:
+    T operator() (const F& v){
+        return boost::lexical_cast<T>(v);
+    }
+};
+
+template<class T> //将string -> vector<T>
+class LexicalCast<std::string, std::vector<T>>{
+public:
+    std::vector<T> operator()(const std::string& v){
+        YAML::Node node = YAML::Load(v); //函数Load 先将string v转为yaml结构node
+        typename std::vector<T> vec;
+        std::stringstream ss;
+        for(size_t i = 0; i < node.size(); ++i){
+            ss.str("");//给流 初始化为空
+            ss << node[i];
+            vec.push_back(LexicalCast<std::string , T>() (ss.str())); //将流.str() ==> string 转成 T类型
+        }
+        return vec;
+    }
+};
+
+template<class T>//将vector<T> --> string
+class LexicalCast<std::vector<T>, std::string>{
+public:
+    std::string operator()(const std::vector<T>& v){
+        YAML::Node node;
+        for(auto& i : v){
+            node.push_back(YAML::Load(LexicalCast<T, std::string>() (i))) ;//将vector里面的每一个T类型转换成string, 再LOAD成 yaml结构体 入node,
+        }
+        std::stringstream ss;
+        ss << node;
+        return ss.str();
+    }
+};
+
+//FromStr T operator() (const std::string&)
+//ToStr std::string operator() (const T&)
+template<class T , class FromStr = LexicalCast<std::string, T>
+                 , class ToStr = LexicalCast<T, std::string>>
 class ConfigVar : public ConfigVarBase{
 public:
     typedef std::shared_ptr<ConfigVar> ptr;
@@ -46,7 +88,8 @@ public:
 
     std::string toString() override {
         try{
-            return boost::lexical_cast<std::string>(m_val);//将T强转成string
+            //return boost::lexical_cast<std::string>(m_val);//将T强转成string
+            return ToStr() (m_val);
         }catch(std::exception& e){
             SYLAR_LOG_ERROR(SYLAR_LOG_ROOT()) << "ConfigVar::toString exeception" <<e.what() << " convert: " 
             << typeid(m_val).name() << " to string";
@@ -56,7 +99,8 @@ public:
 
     bool fromString(const std::string& val) override {
         try{
-            m_val = boost::lexical_cast<T>(val);//将string强转成T
+            //m_val = boost::lexical_cast<T>(val);//将string强转成T
+            setValue(FromStr() (val));
         }catch (std::exception& e){
             SYLAR_LOG_ERROR(SYLAR_LOG_ROOT()) << "ConfigVar::toString exception" << e.what() << " convert: string to " 
             << typeid(m_val).name(); 
