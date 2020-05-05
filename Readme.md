@@ -1,6 +1,6 @@
-#2020/05/02 大半夜编译gcc 2~3h 
-#我的五一献给c++服务器开发
-#syalr
+# 2020/05/02 大半夜编译gcc 2~3h 
+# 我的五一献给c++服务器开发
+# syalr
 
 bin 
       安装boost
@@ -8,12 +8,12 @@ bin
       yum install boost-devel
       yum install boost-doc
 
-##开发环境
+## 开发环境
 Centos7
 gcc 9.1
 cmake
 
-##日志系统
+## 日志系统
 
 Log4J 仿照
 
@@ -69,14 +69,14 @@ node.IsScalar();
 
 ```
 
-##协程库封装
+## 协程库封装
 
-##socket函数库
+## socket函数库
 
-##http协议开发
+## http协议开发
 
-##分布协议
+## 分布协议
 
-##推荐系统
+## 推荐系统
 
 
