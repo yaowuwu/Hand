@@ -33,6 +33,7 @@ public:
 
     virtual std::string toString() = 0;
     virtual bool fromString(const std::string& val)  = 0;//解析
+    virtual std::string getTypeName() const  = 0;
 
 protected:
     std::string m_name;
@@ -275,6 +276,7 @@ public:
 
     const T getValue()  { return m_val; }
     void setValue(const T& v) { m_val = v; }
+    std::string getTypeName() const  override {return typeid(T).name();}
 private:
     T m_val;
 };//模板子类继承非模板父类
@@ -286,6 +288,20 @@ public:
 
     template<class T>//创建
     static typename ConfigVar<T>::ptr Lookup( const std::string& name, const T& default_value, const std::string& description = ""){
+	auto it = s_datas.find(name);
+	if(it != s_datas.end()){
+		auto tmp = std::dynamic_pointer_cast<ConfigVar<T> >(it->second);
+		if(tmp){
+		  SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "Lookup name = " << name << " exists";
+		  return tmp;
+		}else{
+		  SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "Lookup name = " << name << " exists but type not "
+				<< typeid(T).name() << " real_type = " << it->second->getTypeName() << " "
+                << it->second->toString();
+		 return nullptr;
+		}
+	}
+		
         auto tmp = Lookup<T>(name);
         if(tmp){
             SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "Lookup namne = " << name << " exists";

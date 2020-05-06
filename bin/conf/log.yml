@@ -31,3 +31,10 @@ system:
         k:  120
         k1: 130
         k2: 140
+
+class:
+    person:
+        name: mao
+        age: 24
+        sex: true
+
