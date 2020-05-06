@@ -22,3 +22,12 @@ system:
         - 20
     int_list: [30, 40]
     int_set: [50, 60]
+    int_uset: [70, 80]
+    str_int_map : 
+        k:  90
+        k1: 100
+        k2: 110
+    str_int_umap : 
+        k:  120
+        k1: 130
+        k2: 140

@@ -1,6 +1,7 @@
 ### 2020/05/02 大半夜编译gcc 2~3h 
 ### 我的五一献给c++服务器开发
 ### 2020/05/06 臭兰兰拉着我打游戏
+P13 11.28
 # syalr
 
 bin 
@@ -36,6 +37,9 @@ template<F, T>
 LexicalCast;
 
 //容器 片特化, 目前支持vector 
+//list, set, map, unordered_set, unordered_map
+//map/unordered_map 支持key = std::string
+//Config::Lookup(key), key相同,类型不同, 不会有报错, 这个需要处理
 ```
 
 更新虚拟机时间
