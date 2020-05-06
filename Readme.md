@@ -41,6 +41,8 @@ LexicalCast;
 //map/unordered_map 支持key = std::string
 //Config::Lookup(key), key相同,类型不同, 不会有报错, 这个需要处理
 ```
+自定义类型,需要实现sylar::LexicalCast,片特化实现后,
+就可以支持Config解析自定义类型, 自定义类型可以和常规stl容器一起使用.
 
 更新虚拟机时间
 sudo yum install -y man-pages.noarch

@@ -269,7 +269,7 @@ public:
             setValue(FromStr() (val));
         }catch (std::exception& e){
             SYLAR_LOG_ERROR(SYLAR_LOG_ROOT()) << "ConfigVar::toString exception" << e.what() << " convert: string to " 
-            << typeid(m_val).name(); 
+            << typeid(m_val).name()  << " - " << val; 
         }
         return false;
     }
